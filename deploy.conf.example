@@ -1,0 +1,102 @@
+#!/bin/bash
+#===============================================================================
+# Deployment Configuration File
+# Author: Muhammad Reza
+# Last Updated: 2026-03-16
+#
+# Instructions:
+# 1. Copy this file to deploy.conf (if not already named)
+# 2. Update the values below for your environment
+# 3. Keep this file secure - it contains sensitive configuration
+# 4. Do not commit to version control with real values
+#===============================================================================
+
+#-------------------------------------------------------------------------------
+# AWS Configuration
+#-------------------------------------------------------------------------------
+
+# AWS Region where your infrastructure is deployed
+# Format: region-code (e.g., us-east-1, ap-southeast-1, eu-west-1)
+AWS_REGION="us-east-1"
+
+#-------------------------------------------------------------------------------
+# Load Balancer Configuration
+#-------------------------------------------------------------------------------
+
+# ALB Target Group ARN
+# Find this via AWS Console or CLI:
+#   aws elbv2 describe-target-groups --query 'TargetGroups[*].[TargetGroupArn,TargetGroupName]'
+# Example: arn:aws:elasticloadbalancing:us-east-1:123456789012:targetgroup/my-app-tg/abc123def456
+ALB_TARGET_GROUP_ARN="arn:aws:elasticloadbalancing:us-east-1:123456789012:targetgroup/my-app-tg/abc123def456"
+
+#-------------------------------------------------------------------------------
+# S3 Configuration
+#-------------------------------------------------------------------------------
+
+# S3 Bucket for storing deployment artifacts
+# This bucket should exist and have appropriate IAM permissions
+# Bucket name only (no s3:// prefix)
+DEPLOYMENT_BUCKET="my-company-deployments"
+
+#-------------------------------------------------------------------------------
+# Application Configuration
+#-------------------------------------------------------------------------------
+
+# Application name (used for directory structure and artifact naming)
+# Should match the application directory on EC2 instances
+APPLICATION_NAME="my-web-app"
+
+#-------------------------------------------------------------------------------
+# Health Check Configuration
+#-------------------------------------------------------------------------------
+
+# Health check endpoint path
+# This endpoint should return HTTP 200 when application is healthy
+HEALTH_CHECK_PATH="/api/health"
+
+# Timeout in seconds for health checks and ALB (de)registration
+HEALTH_CHECK_TIMEOUT=300
+
+# Interval in seconds between health check attempts
+HEALTH_CHECK_INTERVAL=15
+
+#-------------------------------------------------------------------------------
+# Deployment Settings
+#-------------------------------------------------------------------------------
+
+# Maximum number of retry attempts for failed operations
+MAX_RETRIES=3
+
+# Delay in seconds between retry attempts (multiplied by attempt number)
+RETRY_DELAY=10
+
+#-------------------------------------------------------------------------------
+# Logging Configuration
+#-------------------------------------------------------------------------------
+
+# Directory for deployment logs (on the machine running this script)
+# Note: For Windows, use a path like: C:/Logs/Deployments
+LOG_DIR="/var/log/deployments"
+
+# Number of days to retain log files
+LOG_RETENTION_DAYS=30
+
+#-------------------------------------------------------------------------------
+# Optional: Environment-Specific Overrides
+#-------------------------------------------------------------------------------
+
+# Uncomment and modify for environment-specific settings
+
+# For Production:
+# AWS_REGION="us-east-1"
+# ALB_TARGET_GROUP_ARN="arn:aws:elasticloadbalancing:us-east-1:123456789012:targetgroup/prod-app-tg/xyz789"
+# DEPLOYMENT_BUCKET="company-prod-deployments"
+# APPLICATION_NAME="my-web-app"
+# HEALTH_CHECK_PATH="/api/health"
+
+# For Staging:
+# AWS_REGION="us-east-1"
+# ALB_TARGET_GROUP_ARN="arn:aws:elasticloadbalancing:us-east-1:123456789012:targetgroup/staging-app-tg/def456"
+# DEPLOYMENT_BUCKET="company-staging-deployments"
+# APPLICATION_NAME="my-web-app-staging"
+# HEALTH_CHECK_PATH="/api/health"

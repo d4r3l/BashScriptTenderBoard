@@ -1,0 +1,31 @@
+# Deployment configuration (contains sensitive data)
+deploy.conf
+
+# Log files
+*.log
+*.log.gz
+logs/
+
+# IDE and editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Temporary files
+tmp/
+temp/
+*.tmp
+
+# AWS credentials (never commit these)
+.aws/
+credentials
+
+# Environment files
+.env
+.env.*
